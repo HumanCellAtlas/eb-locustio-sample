@@ -40,8 +40,8 @@ class DownloadUser(DSSLocust):
 
 
 class SearchUser(HttpLocust):
-    min_wait = 250
-    max_wait = 500
+    min_wait = 500
+    max_wait = 1000
     task_set = SearchTaskSet
     weight = 4
     host = HOST
