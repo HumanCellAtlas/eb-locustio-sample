@@ -3,7 +3,7 @@ from locust import HttpLocust
 
 from locustfiles.common.dsslocust import DSSLocust
 # from locustfiles import UploadTaskSet, NotifyTaskSet, SearchTaskSet, DownloadTaskSet, CheckoutTaskSet
-from locustfiles import SearchTaskSet, DownloadTaskSet
+from locustfiles import SearchTaskSet, DownloadFixedTaskSet
 
 HOST = os.getenv('TARGET_URL', "http://localhost")
 
