@@ -26,7 +26,7 @@ HOST = os.getenv('TARGET_URL', "http://localhost")
 class DownloadUser(DSSLocust):
     min_wait = 500
     max_wait = 1000
-    task_set = DownloadTaskSet
+    task_set = DownloadFixedTaskSet
     weight = 3
     host = HOST
 #
