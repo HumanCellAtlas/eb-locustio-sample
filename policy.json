@@ -23,6 +23,15 @@
             "Resource": [
                 "*"
             ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:Get*"
+            ],
+            "Resource": [
+                "arn:aws:secretsmanager:*:*:secret:$DSS_SECRETS_STORE/*"
+            ]
         }
     ]
 }
