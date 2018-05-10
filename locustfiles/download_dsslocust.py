@@ -45,14 +45,14 @@ class DownloadFixedTaskSet(TaskSet):
     @task(1)
     def download_bundle(self):
         with TemporaryDirectory() as tmp_dir:
-            self.client.download(self.bundle_uuid,  self.replica, version=self.version, dest_name=tmp_dir)
+            self.client.download(self.bundle_uuid,  self.replica, version=self.version, dest_name=tmp_dir, name="test")
 
     @task(1)
     def download_file_metadata(self):
         bundle = self.client.get_bundle(uuid=self.bundle_uuid, replica=self.replica, version=self.version)["bundle"]
         for file_ in bundle["files"]:
             file_uuid = file_["uuid"]
-            self.client.head_file(uuid=file_uuid, replica=self.replica)
+            self.client.head_file(uuid=file_uuid, replica=self.replica, name="test")
 
 
 class DownloadUser(DSSLocust):
