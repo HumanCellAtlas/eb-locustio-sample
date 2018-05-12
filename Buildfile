@@ -9,6 +9,5 @@
 # BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under the License.
 
-#buildvenv: python36 -m pip install --user -r requirements.txt
-get_secrets: aws secretsmanager get-secret-value --secret-id ${DSS_SECRETS_STORE}/${DSS_DEPLOYMENT_STAGE}/gcp-credentials.json | jq -r .SecretString > ~/gcp-credentials.json
+get_secrets: aws secretsmanager get-secret-value --secret-id ${DSS_SECRETS_STORE}/${DSS_DEPLOYMENT_STAGE}/gcp-credentials.json | jq -r .SecretString > ${GOOGLE_APPLICATION_CREDENTIALS}
 build: ./build.rb
