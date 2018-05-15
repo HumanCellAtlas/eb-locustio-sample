@@ -15,6 +15,9 @@ class NotifyTaskSet(TaskSet):
     def on_start(self):
         self.replica = get_replica()
         self.notification_keys = []
+        self.update_subscription_count()
+
+    def update_subscription_count(self):
         resp = self.client.get_subscriptions(replica=self.replica)
         self.subscription_count = len(resp['subscriptions'])
 
@@ -30,8 +33,8 @@ class NotifyTaskSet(TaskSet):
                                                         replica=self.replica,
                                                         method='POST')
             subscription_id = put_response['uuid']
-            self.subscription_ids.append((subscription_id,self.replica))
-            self.subscription_count += 1
+            self.update_subscription_count()
+
 
     @task(1)
     def get_subscriptions(self):
