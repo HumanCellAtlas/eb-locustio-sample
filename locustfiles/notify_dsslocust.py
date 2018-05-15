@@ -2,7 +2,7 @@ import random
 from os import getenv
 import uuid
 from hca.util import SwaggerAPIException
-
+from gevent._semaphore import Semaphore
 from locustfiles.common.dsslocust import DSSLocust, get_DSSClient
 from locustfiles.common import get_replica
 from locust import task, TaskSet, events
@@ -10,9 +10,16 @@ from locust import task, TaskSet, events
 from locustfiles.common.notifcation_server import NotificationServer
 
 
+
 class NotifyTaskSet(TaskSet):
+    subscription_ids_lock = Semaphore()
     subscription_ids = []  # List[Tuple[subscription_id: str, replica: str]]
+
     max_subscriptions = 10  # limits the max number of subscription per slave
+
+    subscription_count_lock = Semaphore()
+    subscription_count=0
+
     def on_start(self):
         self.replica = get_replica()
         self.notification_keys = []
@@ -20,7 +27,16 @@ class NotifyTaskSet(TaskSet):
 
     def update_subscription_count(self):
         resp = self.client.get_subscriptions(replica=self.replica)
-        self.subscription_count = len(resp['subscriptions'])
+        subscription_count = len(resp['subscriptions'])
+        if self.subscription_count_lock.acquire(blocking=True):
+            if subscription_count > self.subscription_count:
+                self.subscription_count = subscription_count
+            self.subscription_count_lock.release()
+
+    def update_subscription_ids(self, uuid):
+        if self.subscription_ids_lock.acquire(blocking=True):
+            self.subscription_ids.append((uuid, self.replica))
+            self.subscription_count_lock.release()
 
     @task(2)
     def put_subscription(self):
@@ -33,7 +49,8 @@ class NotifyTaskSet(TaskSet):
                                                         callback_url=url,
                                                         replica=self.replica,
                                                         method='POST')
-            subscription_id = put_response['uuid']
+
+            self.update_subscription_ids(put_response['uuid'])
             self.update_subscription_count()
 
 
