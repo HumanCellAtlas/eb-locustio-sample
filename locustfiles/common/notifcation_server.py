@@ -6,6 +6,7 @@ from locust.stats import global_stats
 import socket
 import requests
 
+import logging
 
 def unused_tcp_port():
     with contextlib.closing(socket.socket()) as sock:
@@ -31,17 +32,20 @@ class NotifcationHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         # fire event for notification
         notification_event.fire(response=self.request)
+        logging.info("POST!!!")
         self.send_response(200)
         self.end_headers()
 
     def do_GET(self):
         # fire event for notification
         notification_event.fire(response=self.request)
+        logging.info("GET!!!")
         self.send_response(200)
         self.end_headers()
 
     def do_PUT(self):
         notification_event.fire(response=self.request)
+        logging.info("PUT!!!")
         self.send_response(200)
         self.end_headers()
 
