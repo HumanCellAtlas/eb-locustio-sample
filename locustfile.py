@@ -2,8 +2,7 @@ import os
 from locust import HttpLocust
 
 from locustfiles.common.dsslocust import DSSLocust
-# from locustfiles import UploadTaskSet, NotifyTaskSet, SearchTaskSet, DownloadTaskSet, CheckoutTaskSet
-from locustfiles import SearchTaskSet, DownloadFixedTaskSet, NotifyTaskSet
+from locustfiles import UploadTaskSet, NotifyTaskSet, SearchTaskSet, DownloadTaskSet, CheckoutTaskSet
 
 HOST = os.getenv('TARGET_URL', "http://localhost")
 
@@ -15,12 +14,12 @@ HOST = os.getenv('TARGET_URL', "http://localhost")
 #     host = HOST
 #
 #
-# class CheckoutUser(DSSLocust):
-#     min_wait = 3000
-#     max_wait = 3000
-#     task_set = CheckoutTaskSet
-#     weight = 3
-#     host = HOST
+class CheckoutUser(DSSLocust):
+    min_wait = 3000
+    max_wait = 3000
+    task_set = CheckoutTaskSet
+    weight = 3
+    host = HOST
 
 
 # class DownloadUser(DSSLocust):
