@@ -9,5 +9,5 @@
 # BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under the License.
 
-get_secrets: aws secretsmanager get-secret-value --secret-id ${DSS_SECRETS_STORE}/${DSS_DEPLOYMENT_STAGE}/gcp-credentials.json | jq -r .SecretString > ${GOOGLE_APPLICATION_CREDENTIALS}
+set_secret: python36 ./set_secret.py
 build: ./build.rb
