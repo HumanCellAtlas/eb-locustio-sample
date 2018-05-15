@@ -2,42 +2,42 @@ import os
 from locust import HttpLocust
 
 from locustfiles.common.dsslocust import DSSLocust
-from locustfiles import UploadTaskSet, NotifyTaskSet, SearchTaskSet, DownloadTaskSet, CheckoutFixedTaskSet
+from locustfiles import UploadTaskSet, NotifyTaskSet, SearchTaskSet, DownloadFixedTaskSet, CheckoutFixedTaskSet
 
 HOST = os.getenv('TARGET_URL', "http://localhost")
 
-# class UploadUser(DSSLocust):
-#     min_wait = 1000
-#     max_wait = 3000
-#     task_set = UploadTaskSet
-#     weight = 1
-#     host = HOST
-#
-#
-class CheckoutUser(DSSLocust):
-    min_wait = 3000
+class UploadUser(DSSLocust):
+    min_wait = 1000
     max_wait = 3000
-    task_set = CheckoutFixedTaskSet
-    weight = 3
+    task_set = UploadTaskSet
+    weight = 1
     host = HOST
 
 
+# class CheckoutUser(DSSLocust):
+#     min_wait = 3000
+#     max_wait = 3000
+#     task_set = CheckoutFixedTaskSet
+#     weight = 3
+#     host = HOST
+#
+#
 # class DownloadUser(DSSLocust):
 #     min_wait = 500
 #     max_wait = 1000
 #     task_set = DownloadFixedTaskSet
 #     weight = 3
 #     host = HOST
-
-
-class NotifiedUser(DSSLocust):
-    min_wait = 1000
-    max_wait = 3000
-    task_set = NotifyTaskSet
-    weight = 2
-    host = HOST
-
-
+#
+#
+# class NotifiedUser(DSSLocust):
+#     min_wait = 1000
+#     max_wait = 3000
+#     task_set = NotifyTaskSet
+#     weight = 2
+#     host = HOST
+#
+#
 # class SearchUser(HttpLocust):
 #     min_wait = 500
 #     max_wait = 1000
