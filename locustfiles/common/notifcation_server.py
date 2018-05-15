@@ -6,7 +6,6 @@ from locust.stats import global_stats
 import socket
 import requests
 
-import logging
 
 def unused_tcp_port():
     with contextlib.closing(socket.socket()) as sock:
@@ -21,31 +20,27 @@ def myip():
 notification_event = events.EventHook()
 
 
-def notification_event_handler(response=None):
+def notification_event_handler(path, request_type, request):
     # count the number of times a subscription_uuid is hit
     # count the number of times a bundle is hit for a subscription_uuid
-    resp = response.json()
-    global_stats.get(f"notification", 'Post').log(0, 0)
+    notification_id = path.split('/')[-1]
+    # req = request.json()
+    global_stats.get(f"notification {notification_id}", request_type).log(0, 0)
 
 
 class NotifcationHandler(BaseHTTPRequestHandler):
     def do_POST(self):
-        # fire event for notification
-        notification_event.fire(response=self.request)
-        logging.info("POST!!!")
+        notification_event.fire(path=self.path, request_type=self.command, request=self.request)
         self.send_response(200)
         self.end_headers()
 
     def do_GET(self):
-        # fire event for notification
-        notification_event.fire(response=self.request)
-        logging.info("GET!!!")
+        notification_event.fire(path=self.path, request_type=self.command, request=self.request)
         self.send_response(200)
         self.end_headers()
 
     def do_PUT(self):
-        notification_event.fire(response=self.request)
-        logging.info("PUT!!!")
+        notification_event.fire(path=self.path, request_type=self.command, request=self.request)
         self.send_response(200)
         self.end_headers()
 
@@ -54,11 +49,11 @@ class NotifcationHandler(BaseHTTPRequestHandler):
 
 
 class NotificationServer:
-    address = "127.0.0.1"  # socket.gethostbyname_ex(socket.gethostname())[2][0]  # myip()
-    port = 5000  #  unused_tcp_port()
+    address = "127.0.0.1 "  # socket.gethostbyname_ex(socket.gethostname())[2][0]  # myip()
+    port = 50000 #unused_tcp_port()
     server = None
     thread = None
-    url = "tsmith1.us-east-1.elasticbeanstalk.com"
+    url = None
 
     @classmethod
     def make_url(cls):
@@ -82,7 +77,7 @@ class NotificationServer:
     def on_quitting(cls, **kwargs):
         cls.server.shutdown()
 
-
+notification_event += notification_event_handler
 events.quitting += NotificationServer.on_quitting
 events.locust_start_hatching += NotificationServer.on_locust_start_hatching
 
