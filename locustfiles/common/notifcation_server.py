@@ -50,11 +50,11 @@ class NotifcationHandler(BaseHTTPRequestHandler):
 
 
 class NotificationServer:
-    address = socket.gethostbyname_ex(socket.gethostname())[2][0]  # myip()
-    port = unused_tcp_port()
+    address = "127.0.0.1"  # socket.gethostbyname_ex(socket.gethostname())[2][0]  # myip()
+    port = 5000  #  unused_tcp_port()
     server = None
     thread = None
-    url = None
+    url = "tsmith1.us-east-1.elasticbeanstalk.com"
 
     @classmethod
     def make_url(cls):
