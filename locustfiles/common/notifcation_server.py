@@ -25,7 +25,7 @@ def notification_event_handler(response=None):
     # count the number of times a subscription_uuid is hit
     # count the number of times a bundle is hit for a subscription_uuid
     resp = response.json()
-    global_stats.get(f"notification {resp['subscription_uuid']}", 'Post').log(0, 0)
+    global_stats.get(f"notification", 'Post').log(0, 0)
 
 
 class NotifcationHandler(BaseHTTPRequestHandler):
