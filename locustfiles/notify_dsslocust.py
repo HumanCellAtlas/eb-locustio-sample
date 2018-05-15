@@ -1,3 +1,4 @@
+import random
 from os import getenv
 import uuid
 from hca.util import SwaggerAPIException
@@ -43,7 +44,7 @@ class NotifyTaskSet(TaskSet):
     @task(1)
     def get_subscription(self):
         if self.subscription_ids:
-            uuid, replica = self.subscription_ids[0]
+            uuid, replica = random.choice(self.subscription_ids)
             self.client.get_subscription(uuid=uuid, replica=replica)
 
 
