@@ -6,12 +6,12 @@ from locustfiles import UploadTaskSet, NotifyTaskSet, SearchTaskSet, DownloadFix
 
 HOST = os.getenv('TARGET_URL', "http://localhost")
 
-class UploadUser(DSSLocust):
-    min_wait = 1000
-    max_wait = 3000
-    task_set = UploadTaskSet
-    weight = 1
-    host = HOST
+# class UploadUser(DSSLocust):
+#     min_wait = 1000
+#     max_wait = 3000
+#     task_set = UploadTaskSet
+#     weight = 1
+#     host = HOST
 
 
 # class CheckoutUser(DSSLocust):
@@ -20,16 +20,16 @@ class UploadUser(DSSLocust):
 #     task_set = CheckoutFixedTaskSet
 #     weight = 3
 #     host = HOST
-#
-#
-# class DownloadUser(DSSLocust):
-#     min_wait = 500
-#     max_wait = 1000
-#     task_set = DownloadFixedTaskSet
-#     weight = 3
-#     host = HOST
-#
-#
+
+
+class DownloadUser(DSSLocust):
+    min_wait = 500
+    max_wait = 1000
+    task_set = DownloadFixedTaskSet
+    weight = 3
+    host = HOST
+
+
 # class NotifiedUser(DSSLocust):
 #     min_wait = 1000
 #     max_wait = 3000
@@ -39,8 +39,8 @@ class UploadUser(DSSLocust):
 #
 #
 # class SearchUser(HttpLocust):
-#     min_wait = 500
-#     max_wait = 1000
+#     min_wait = 1000
+#     max_wait = 2000
 #     task_set = SearchTaskSet
 #     weight = 4
 #     host = HOST
