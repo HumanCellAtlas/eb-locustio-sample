@@ -30,17 +30,17 @@ class DownloadUser(DSSLocust):
     host = HOST
 
 
-class NotifiedUser(DSSLocust):
-    min_wait = 1000
-    max_wait = 3000
-    task_set = NotifyTaskSet
-    weight = 2
-    host = HOST
-
-
-class SearchUser(HttpLocust):
-    min_wait = 1000
-    max_wait = 2000
-    task_set = SearchTaskSet
-    weight = 4
-    host = HOST
+# class NotifiedUser(DSSLocust):
+#     min_wait = 1000
+#     max_wait = 3000
+#     task_set = NotifyTaskSet
+#     weight = 2
+#     host = HOST
+#
+#
+# class SearchUser(HttpLocust):
+#     min_wait = 1000
+#     max_wait = 2000
+#     task_set = SearchTaskSet
+#     weight = 4
+#     host = HOST
