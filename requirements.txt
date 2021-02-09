@@ -3,3 +3,4 @@ locustio >= 0.8.1
 gevent >= 1.2.2
 boto3
 git+git://github.com/HumanCellAtlas/dcp-pyjsongen@master#egg=pyjsongen
+cryptography>=3.3.2 # not directly required, pinned by Snyk to avoid a vulnerability
